@@ -722,3 +722,45 @@ func GO_cpu_socket_power_cap_get(i int) (C.uint32_t) {
 func GO_cpu_prochot_status_get(i int) (C.uint32_t) {
 	return C.goamdsmi_cpu_prochot_status_get(C.uint(i))
 }
+
+// ``GO_gpu_dev_unique_id_get`` returns the UUID of the GPU device at the specified GPU
+// index.
+//
+// Input parameter: ``int``, GPU index.
+//
+// Output: ``char*``, returns GPU device UUID on success or "NA" on fail.
+//
+// Example:
+//
+//   import "github.com/ROCm/amdsmi"
+//
+//   if true == goamdsmi.GO_gpu_init() {
+//       num_gpus := int(goamdsmi.GO_gpu_num_monitor_devices())
+//       for i := 0; i < num_gpus; i++ {
+//           uuid := goamdsmi.GO_gpu_dev_unique_id_get(i)
+//       }
+//   }
+func GO_gpu_dev_unique_id_get(i int) (*C.char) {
+	return C.goamdsmi_gpu_dev_unique_id_get(C.uint(i))
+}
+
+// ``GO_gpu_dev_bdf_string_get`` returns the BDF string (e.g., "0000:03:00.0") of the GPU device at the specified GPU
+// index.
+//
+// Input parameter: ``int``, GPU index.
+//
+// Output: ``char*``, returns GPU device BDF string on success or "NA" on fail.
+//
+// Example:
+//
+//   import "github.com/ROCm/amdsmi"
+//
+//   if true == goamdsmi.GO_gpu_init() {
+//       num_gpus := int(goamdsmi.GO_gpu_num_monitor_devices())
+//       for i := 0; i < num_gpus; i++ {
+//           bdf := goamdsmi.GO_gpu_dev_bdf_string_get(i)
+//       }
+//   }
+func GO_gpu_dev_bdf_string_get(i int) (*C.char) {
+	return C.goamdsmi_gpu_dev_bdf_string_get(C.uint(i))
+}

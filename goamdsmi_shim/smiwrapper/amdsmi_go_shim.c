@@ -659,3 +659,44 @@ uint64_t goamdsmi_gpu_dev_gpu_memory_total_get(uint32_t dv_ind)
 
     return gpu_memory_total;
 }
+
+char* goamdsmi_gpu_dev_unique_id_get(uint32_t dv_ind)
+{
+    uint32_t len = 256;
+    char* uuid_str = (char*)malloc(sizeof(char)*len);
+    uuid_str[0] = '\0';
+    strcpy(uuid_str, GOAMDSMI_STRING_NA);
+
+    if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_device_uuid(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &len, uuid_str)))
+    {
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, UUID:%s\n", dv_ind, uuid_str);}
+    }
+    else
+    {
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Failed for Gpu:%d, UUID:%s\n", dv_ind, uuid_str);}
+    }
+    
+    return uuid_str;
+}
+
+char* goamdsmi_gpu_dev_bdf_string_get(uint32_t dv_ind)
+{
+    char* bdf_str = (char*)malloc(sizeof(char)*32);
+    bdf_str[0] = '\0';
+    strcpy(bdf_str, GOAMDSMI_STRING_NA);
+
+    amdsmi_bdf_t bdf = {0};
+    if((dv_ind < num_gpu_devices_inAllSocket) && 
+       (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_device_bdf(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &bdf)))
+    {
+        snprintf(bdf_str, 32, "%04x:%02x:%02x.%x", 
+                 bdf.domain_number, bdf.bus_number, bdf.device_number, bdf.function_number);
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, BDF:%s\n", dv_ind, bdf_str);}
+    }
+    else
+    {
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Failed for Gpu:%d, BDF:%s\n", dv_ind, bdf_str);}
+    }
+    
+    return bdf_str;
+}
