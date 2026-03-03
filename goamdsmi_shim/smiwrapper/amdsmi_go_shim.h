@@ -593,37 +593,3 @@ char* goamdsmi_gpu_dev_unique_id_get(uint32_t dv_ind);
  *
  */
 char* goamdsmi_gpu_dev_bdf_string_get(uint32_t dv_ind);
-
-/**
- *  @brief Go language stub to get the GPU device UUID string
- *
- *  @details This function will call the amdsmi_get_gpu_device_uuid()
- *  function to write the GPU device UUID string (up to len characters)
- *  for device dv_ind and return a char pointer. This value is then
- *  passed as char * to the Go routine that called it. The caller of this
- *  function must free the allocated buffer for the UUID.
- *
- *  @param[in] ::uint32_t device index
- *
- *  @retval ::char* GPU device UUID
- *  @retval NA is returned upon failure.
- *
- */
-char* goamdsmi_gpu_dev_unique_id_get(uint32_t dv_ind);
-
-/**
- *  @brief Go language stub to get the GPU device BDF string
- *
- *  @details This function will call the amdsmi_get_gpu_device_bdf()
- *  function to get the Bus:Device.Function information and format it as
- *  a string (e.g., "0000:03:00.0"). This value is then
- *  passed as char * to the Go routine that called it. The caller of this
- *  function must free the allocated buffer for the BDF string.
- *
- *  @param[in] ::uint32_t device index
- *
- *  @retval ::char* GPU device BDF string
- *  @retval NA is returned upon failure.
- *
- */
-char* goamdsmi_gpu_dev_bdf_string_get(uint32_t dv_ind);
